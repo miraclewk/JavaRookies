@@ -30,3 +30,10 @@ private Object[] grow(int minCapacity) {
 
 ## HashMap,HashTable,ConcurrentHashMap
 ### HashMap和HashTable的区别
+
+### HashMap的底层实现
+    为什么要用红黑树，有什么好处，为什么不用其他平衡二叉树，负载因子为什么默认取0.75，HashMap为什么是线程不安全的，HashMap的长度为什么要取2的幂次方，HashMap是怎么扩容的，HashMap的哈希过程为什么高16位要异或低16位
+    
+### HashMap和ConcurrentHashMap区别
+
+### ConcurrentHashMap1.7和1.8的区别
