@@ -32,6 +32,20 @@ private Object[] grow(int minCapacity) {
 ### HashMap和HashTable的区别
 
 ### HashMap的底层实现
+    1.构造方法（4个）
+    第一个传入初始容量和负载因子
+    ```
+    public HashMap(int initialCapacity, float loadFactor) {
+        if (initialCapacity < 0)
+            throw new IllegalArgumentException("Illegal initial capacity: " + initialCapacity);
+        if (initialCapacity > MAXIMUM_CAPACITY)
+            initialCapacity = MAXIMUM_CAPACITY;
+        if (loadFactor <= 0 || Float.isNaN(loadFactor))
+            throw new IllegalArgumentException("Illegal load factor: " + loadFactor);
+        this.loadFactor = loadFactor;
+        this.threshold = tableSizeFor(initialCapacity);
+    }
+    ```
     为什么要用红黑树，有什么好处，为什么不用其他平衡二叉树，负载因子为什么默认取0.75，
     HashMap为什么是线程不安全的，HashMap的长度为什么要取2的幂次方，
     HashMap是怎么扩容的，HashMap的哈希过程为什么高16位要异或低16位
