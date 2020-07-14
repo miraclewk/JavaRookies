@@ -33,8 +33,8 @@ private Object[] grow(int minCapacity) {
 
 ### HashMap的底层实现
     1.构造方法（4个）
+      
     第一个传入初始容量和负载因子
-    ```
     public HashMap(int initialCapacity, float loadFactor) {
         if (initialCapacity < 0)
             throw new IllegalArgumentException("Illegal initial capacity: " + initialCapacity);
@@ -45,11 +45,23 @@ private Object[] grow(int minCapacity) {
         this.loadFactor = loadFactor;
         this.threshold = tableSizeFor(initialCapacity);
     }
-    ```
-    为什么要用红黑树，有什么好处，为什么不用其他平衡二叉树，负载因子为什么默认取0.75，
-    HashMap为什么是线程不安全的，HashMap的长度为什么要取2的幂次方，
-    HashMap是怎么扩容的，HashMap的哈希过程为什么高16位要异或低16位
-    HashMap的put源码和get源码
+    第二个传入初始容量
+    public HashMap(int initialCapacity) {
+        this(initialCapacity, DEFAULT_LOAD_FACTOR);
+    }
+    第三个不传入任何值
+    public HashMap() {
+        this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted
+    }
+    第四个传入一个指定的Map
+    public HashMap(Map<? extends K, ? extends V> m) {
+        this.loadFactor = DEFAULT_LOAD_FACTOR;
+        putMapEntries(m, false);
+    }
+ 为什么要用红黑树，有什么好处，为什么不用其他平衡二叉树，负载因子为什么默认取0.75，
+ HashMap为什么是线程不安全的，HashMap的长度为什么要取2的幂次方，
+ HashMap是怎么扩容的，HashMap的哈希过程为什么高16位要异或低16位
+ HashMap的put源码和get源码
     
 ### HashMap和ConcurrentHashMap区别
 
