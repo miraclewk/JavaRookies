@@ -1,2 +1,2 @@
 # JavaRookies
-关于Java开发面试题的总结
+以面试官问问题的形式总结的Java开发面试题
