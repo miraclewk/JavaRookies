@@ -38,7 +38,44 @@ private Object[] grow(int minCapacity) {
     static final int MAXIMUM_CAPACITY = 1 << 30;
     static final float DEFAULT_LOAD_FACTOR = 0.75f;  //负载因子
     
-    2.构造方法（4个）
+    2.哈希桶数组中的存储数据结构
+    
+    这个是HashMap的一个内部类，实现了Map.Entry接口，其构造方法包含四个参数：hash,key,value,next。然后这里面还定义了一些其他方法，如getKey(),getValue(),toString(),setValue(),还重写了         equals方法
+    static class Node<K,V> implements Map.Entry<K,V> {
+        final int hash;
+        final K key;
+        V value;
+        Node<K,V> next;
+        Node(int hash, K key, V value, Node<K,V> next) {
+            this.hash = hash;
+            this.key = key;
+            this.value = value;
+            this.next = next;
+        }
+        public final K getKey()        { return key; }
+        public final V getValue()      { return value; }
+        public final String toString() { return key + "=" + value; }
+        public final int hashCode() {
+            return Objects.hashCode(key) ^ Objects.hashCode(value);
+        }
+        public final V setValue(V newValue) {
+            V oldValue = value;
+            value = newValue;
+            return oldValue;
+        }
+        public final boolean equals(Object o) {
+            if (o == this)
+                return true;
+            if (o instanceof Map.Entry) {
+                Map.Entry<?,?> e = (Map.Entry<?,?>)o;
+                if (Objects.equals(key, e.getKey()) &&
+                    Objects.equals(value, e.getValue()))
+                    return true;
+            }
+            return false;
+        }
+    }
+    3.构造方法（4个）
       
     第一个传入初始容量和负载因子
     public HashMap(int initialCapacity, float loadFactor) {
@@ -65,13 +102,14 @@ private Object[] grow(int minCapacity) {
         putMapEntries(m, false);
     }
     
-    3.hash源码
+    4.hash源码
+    
     static final int hash(Object key) {
         int h;
         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
     }
     
-    4.put源码
+    5.put源码
     
     public V put(K key, V value) {
         return putVal(hash(key), key, value, false, true);
