@@ -29,9 +29,14 @@ private Object[] grow(int minCapacity) {
 上述代码中ArrayList的MAX_ARRAY_SIZE为Integer.MAX_VALUE-8;
 
 ## HashMap,HashTable,ConcurrentHashMap
-### HashMap和HashTable的区别
 
-### HashMap的底层实现
+### HashMap和HashTable的区别
+1. HashMap是线程不安全的，而HashTable是线程安全的，原因是其加了synchronized锁。
+2. HashMap的初始容量默认为16，每次扩容都是2的幂次方倍，而HashTable初始容量是11，扩容是2n+1。
+3. HashMap可以插入null作为键，而HashTable不行，会抛出NullPointerException异常。
+4. 在Java1.8之后HashMap在解决哈希冲突时，当链表长度大于8时会将链表转为红黑树，而HashTable不会且因为效率问题基本被弃用了。
+
+### [HashMap的底层实现](https://zhuanlan.zhihu.com/p/21673805)
     1.静态常量（常用）
     
     static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; 
@@ -190,6 +195,22 @@ private Object[] grow(int minCapacity) {
         }
         return null;
     }
+ 
+ ### HashMap的扩容机制
+ 下述代码为Java1.7的源代码
+ void resize(int newCapacity) {   //传入新的容量
+      Entry[] oldTable = table;    //引用扩容前的Entry数组
+      int oldCapacity = oldTable.length;         
+      if (oldCapacity == MAXIMUM_CAPACITY) {  //扩容前的数组大小如果已经达到最大(2^30)了
+          threshold = Integer.MAX_VALUE; //修改阈值为int的最大值(2^31-1)，这样以后就不会扩容了
+          return;
+      }   
+     Entry[] newTable = new Entry[newCapacity];  //初始化一个新的Entry数组
+     transfer(newTable);                         //！！将数据转移到新的Entry数组里
+     table = newTable;                           //HashMap的table属性引用新的Entry数组
+     threshold = (int)(newCapacity * loadFactor);//修改阈值
+ }
+
  为什么要用红黑树，有什么好处，为什么不用其他平衡二叉树，负载因子为什么默认取0.75，
  HashMap为什么是线程不安全的，HashMap的长度为什么要取2的幂次方，
  HashMap是怎么扩容的，HashMap的哈希过程为什么高16位要异或低16位
