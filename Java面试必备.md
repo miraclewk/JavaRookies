@@ -40,7 +40,8 @@ private Object[] grow(int minCapacity) {
     
     2.哈希桶数组中的存储数据结构
     
-    这个是HashMap的一个内部类，实现了Map.Entry接口，其构造方法包含四个参数：hash,key,value,next。然后这里面还定义了一些其他方法，如getKey(),getValue(),toString(),setValue(),还重写了         equals方法
+    这个是HashMap的一个内部类，实现了Map.Entry接口，其构造方法包含四个参数：hash,key,value,next。
+    然后这里面还定义了一些其他方法，如getKey(),getValue(),toString(),setValue(),还重写了equals方法。
     static class Node<K,V> implements Map.Entry<K,V> {
         final int hash;
         final K key;
@@ -116,17 +117,22 @@ private Object[] grow(int minCapacity) {
     }
     final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
         Node<K,V>[] tab; Node<K,V> p; int n, i;
+        //首先判断table是否为空或者长度是否为0，如果是则需要调用resize()扩容
         if ((tab = table) == null || (n = tab.length) == 0)
             n = (tab = resize()).length;
+        //根据hash值计算在哈希桶中的索引，如果当前索引的位置没有节点，直接新建节点添加
         if ((p = tab[i = (n - 1) & hash]) == null)
             tab[i] = newNode(hash, key, value, null);
+        //如果有节点
         else {
             Node<K,V> e; K k;
-            if (p.hash == hash &&
-                ((k = p.key) == key || (key != null && key.equals(k))))
+            //判断要插入的key是否等于当前索引中的首个元素，如果等于直接覆盖
+            if (p.hash == hash && ((k = p.key) == key || (key != null && key.equals(k))))
                 e = p;
+            //判断是否是红黑树，如果是，则在树中直接插入节点
             else if (p instanceof TreeNode)
                 e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
+            //如果不是则开始遍历链表准备插入，如果链表长度大于8则转换成红黑树插入，否则链表插入，若key存在直接覆盖
             else {
                 for (int binCount = 0; ; ++binCount) {
                     if ((e = p.next) == null) {
@@ -135,8 +141,7 @@ private Object[] grow(int minCapacity) {
                             treeifyBin(tab, hash);
                         break;
                     }
-                    if (e.hash == hash &&
-                        ((k = e.key) == key || (key != null && key.equals(k))))
+                    if (e.hash == hash && ((k = e.key) == key || (key != null && key.equals(k))))
                         break;
                     p = e;
                 }
@@ -150,6 +155,7 @@ private Object[] grow(int minCapacity) {
             }
         }
         ++modCount;
+        //插入成功后，判断键值对数量size是否超过了最大容量threshold，超过则扩容
         if (++size > threshold)
             resize();
         afterNodeInsertion(evict);
