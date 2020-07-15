@@ -116,6 +116,7 @@ private Object[] grow(int minCapacity) {
     public V put(K key, V value) {
         return putVal(hash(key), key, value, false, true);
     }
+    //参数onlyIfAbsent表示是否替换原值,参数evict我们可以忽略它，它主要用来区别通过put添加还是创建时初始化数据的
     final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
         Node<K,V>[] tab; Node<K,V> p; int n, i;
         //首先判断table是否为空或者长度是否为0，如果是则需要调用resize()扩容
@@ -171,7 +172,7 @@ private Object[] grow(int minCapacity) {
     }
     final Node<K,V> getNode(int hash, Object key) {
         Node<K,V>[] tab; Node<K,V> first, e; int n; K k;
-        //首先判断table是否为空，其长度是否大于0，以及当前位置是否为空，如果全是则返回null，不是继续判断
+        //首先判断table是否为空，其长度是否大于0，以及当前位置是否为空，如果有一个是则返回null，不是继续判断
         if ((tab = table) != null && (n = tab.length) > 0 && (first = tab[(n - 1) & hash]) != null) {
         //判断当前位置的首节点是否等于key，是则返回，不是则遍历下一节点，然后判断是否为树节点，如果是转为树查找，不是则遍历链表查找。
             if (first.hash == hash && // always check first node
