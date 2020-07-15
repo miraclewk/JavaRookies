@@ -162,6 +162,32 @@ private Object[] grow(int minCapacity) {
         return null;
     }
     
+    6.get源码
+    
+    public V get(Object key) {
+        Node<K,V> e;
+        return (e = getNode(hash(key), key)) == null ? null : e.value;
+    }
+    final Node<K,V> getNode(int hash, Object key) {
+        Node<K,V>[] tab; Node<K,V> first, e; int n; K k;
+        //首先判断table是否为空，其长度是否大于0，以及当前位置是否为空，如果全是则返回null，不是继续判断
+        if ((tab = table) != null && (n = tab.length) > 0 && (first = tab[(n - 1) & hash]) != null) {
+        //判断当前位置的首节点是否等于key，是则返回，不是则遍历下一节点，然后判断是否为树节点，如果是转为树查找，不是则遍历链表查找。
+            if (first.hash == hash && // always check first node
+                ((k = first.key) == key || (key != null && key.equals(k))))
+                return first;
+            if ((e = first.next) != null) {
+                if (first instanceof TreeNode)
+                    return ((TreeNode<K,V>)first).getTreeNode(hash, key);
+                do {
+                    if (e.hash == hash &&
+                        ((k = e.key) == key || (key != null && key.equals(k))))
+                        return e;
+                } while ((e = e.next) != null);
+            }
+        }
+        return null;
+    }
  为什么要用红黑树，有什么好处，为什么不用其他平衡二叉树，负载因子为什么默认取0.75，
  HashMap为什么是线程不安全的，HashMap的长度为什么要取2的幂次方，
  HashMap是怎么扩容的，HashMap的哈希过程为什么高16位要异或低16位
