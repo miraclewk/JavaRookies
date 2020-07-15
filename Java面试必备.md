@@ -198,6 +198,7 @@ private Object[] grow(int minCapacity) {
  
  ### HashMap的扩容机制
  下述代码为Java1.7的源代码
+ ```
  void resize(int newCapacity) {   //传入新的容量
       Entry[] oldTable = table;    //引用扩容前的Entry数组
       int oldCapacity = oldTable.length;         
@@ -206,15 +207,29 @@ private Object[] grow(int minCapacity) {
           return;
       }   
      Entry[] newTable = new Entry[newCapacity];  //初始化一个新的Entry数组
-     transfer(newTable);                         //！！将数据转移到新的Entry数组里
+     transfer(newTable);                         //将数据转移到新的Entry数组里
      table = newTable;                           //HashMap的table属性引用新的Entry数组
      threshold = (int)(newCapacity * loadFactor);//修改阈值
  }
+ ```
+ Java1.8对扩容做了哪些优化？
+ 
+    在java1.7版本的时候，扩容的时候每次都需要重新计算hash值，但是因为HashMap使用的是2的幂次方扩展，所以可以发现每次扩容，
+    元素的位置要么在原位置，要么在原位置上移动新扩容的大小所处的位置。而元素在哈希桶上的位置是由（length-1）& hash得到的，
+    所以并不需要每次都重新计算hash值，只要看之前hash新增的那个比特是1还是0即可。
+ 
+ HashMap扩容为什么要取2的幂次方？
+ 
+    因为只有在length为2的幂次方的时候hash%length==（length-1）& hash，使用位运算符能够大大提高计算效率
+ 
+### HashMap为什么是线程不安全的？
+ 
 
- 为什么要用红黑树，有什么好处，为什么不用其他平衡二叉树，负载因子为什么默认取0.75，
- HashMap为什么是线程不安全的，HashMap的长度为什么要取2的幂次方，
- HashMap是怎么扩容的，HashMap的哈希过程为什么高16位要异或低16位
- HashMap的put源码和get源码
+### 为什么要用红黑树，有什么好处，为什么不用其他平衡二叉树
+ 
+### HashMap的负载因子为什么要取0.75
+
+### HashMap的哈希过程为什么高16位要异或低16位
     
 ### HashMap和ConcurrentHashMap区别
 
