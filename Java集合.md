@@ -7,7 +7,7 @@
 
 ## 2. ArrayList相关知识（基于Java 11）
 1. ArrayList继承自AbstractList，初始默认容量为10（private static final int DEFAULT_CAPACITY = 10）
-2. ArrayList有两个构造函数，一个不传参默认生成一个初始容量为10的elementData数组，另一个传入一个初始容量参数，小于0会抛出异常
+2. ArrayList有三个构造函数，一个不传参默认生成一个初始容量为10的elementData数组，另一个传入一个初始容量参数，小于0会抛出异常，最后一个是传入一个指定的集合
 ```
 public ArrayList(int initialCapacity) {
         if (initialCapacity > 0) {
