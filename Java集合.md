@@ -243,6 +243,6 @@ private Object[] grow(int minCapacity) {
 
 ### 3.7 HashMap的哈希过程为什么高16位要异或低16位
     
-### 3.8 HashMap和ConcurrentHashMap区别
+### 3.8 HashMap和[ConcurrentHashMap](https://github.com/miraclewk/JavaRookies/edit/master/Java%E9%9B%86%E5%90%88.md)区别
 
 ### 3.9 [ConcurrentHashMap1.7和1.8的区别,看过源码吗，怎么实现线程安全的](https://www.jianshu.com/p/e694f1e868ec)
