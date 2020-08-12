@@ -11,7 +11,12 @@
 
 ## Synchronized的原理以及和ReentrantLock的区别
 
-## volatile怎么实现的以及和Synchronized的区别
+## volatile的底层原理
+简单来说，volatile具有两个重要的功能，即保证可见性和禁止重排序。
+
+保证可见性，是其在经过JVM编译之后，对应的语句前面会有一个lock指令，这个lock指令会使得CPU将缓存写回到主内存中，同时导致其他处理器的缓存失效（在多核处理器下）
+
+禁止重排序，其实是在volatile语句处加了内存屏障。
 
 ## 轮流打印奇偶数
 
