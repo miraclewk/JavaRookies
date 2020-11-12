@@ -1,4 +1,6 @@
-# Java容器
+# Java集合常见面试题总结
+
+这一块问来问去主要还是ArrayList和HashMap。HashMap这一块源码是必须要懂的。在有的面试官眼里是基础，有的则会是加分项
 
 ## 1. ArrayList和LinkedList的区别（都是线程不安全的）
 1. ArrayList是基于Object数组实现的，而LinkedList是基于双向链表实现的
