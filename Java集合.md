@@ -46,14 +46,14 @@ private Object[] grow(int minCapacity) {
 
 ### 3. HashMap,HashTable,ConcurrentHashMap
 
-**3.1 HashMap和HashTable的区别
+**3.1 HashMap和HashTable的区别**
 
 1. HashMap是线程不安全的，而HashTable是线程安全的，原因是其加了synchronized锁。
 2. HashMap的初始容量默认为16，每次扩容都是2的幂次方倍，而HashTable初始容量是11，扩容是2n+1。
 3. HashMap可以插入null作为键，而HashTable不行，会抛出NullPointerException异常。
 4. 在Java1.8之后HashMap在解决哈希冲突时，当链表长度大于8时会将链表转为红黑树，而HashTable不会且因为效率问题基本被弃用了。
 
-**3.2 [HashMap的底层实现](https://zhuanlan.zhihu.com/p/21673805)
+**3.2 [HashMap的底层实现](https://zhuanlan.zhihu.com/p/21673805)**
 
     1.静态常量（常用）
     
@@ -214,7 +214,7 @@ private Object[] grow(int minCapacity) {
         return null;
     }
  
-**3.3 HashMap的扩容机制
+**3.3 HashMap的扩容机制**
 
  下述代码为Java1.7的源代码
  ```
@@ -241,15 +241,15 @@ private Object[] grow(int minCapacity) {
  
     因为只有在length为2的幂次方的时候hash%length==（length-1）& hash，使用位运算符能够大大提高计算效率
  
-**3.4 HashMap为什么是线程不安全的？
+**3.4 HashMap为什么是线程不安全的？**
  
 
-**3.5 为什么要用红黑树，有什么好处，为什么不用其他平衡二叉树
+**3.5 为什么要用红黑树，有什么好处，为什么不用其他平衡二叉树**
  
-**3.6 HashMap的负载因子为什么要取0.75
+**3.6 HashMap的负载因子为什么要取0.75**
 
-**3.7 HashMap的哈希过程为什么高16位要异或低16位
+**3.7 HashMap的哈希过程为什么高16位要异或低16位**
     
-**3.8 HashMap和[ConcurrentHashMap](https://github.com/miraclewk/JavaRookies/edit/master/Java%E9%9B%86%E5%90%88.md)区别
+**3.8 HashMap和[ConcurrentHashMap](https://github.com/miraclewk/JavaRookies/edit/master/Java%E9%9B%86%E5%90%88.md)区别**
 
-**3.9 [ConcurrentHashMap1.7和1.8的区别,看过源码吗，怎么实现线程安全的](https://www.jianshu.com/p/e694f1e868ec)
+**3.9 [ConcurrentHashMap1.7和1.8的区别,看过源码吗，怎么实现线程安全的](https://www.jianshu.com/p/e694f1e868ec)**
