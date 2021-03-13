@@ -49,11 +49,6 @@ Java并发在面试过程中经常会问到，属于必知必会的知识点，�
 
 11.3 单例模式的书写及相关问题
 
-## 问题答案(仅供参考)
-
-相关答案和pdf版整理在我的公众号里，关注公众号JavaStudy,回复Java并发即可
-
-![image](https://github.com/miraclewk/JavaRookies/blob/master/JavaStudy.jpg)
 
 
 
